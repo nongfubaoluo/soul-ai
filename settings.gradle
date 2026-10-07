@@ -12,5 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Soul AI"
+
+rootProject.name = "SoulAI"
 include ':app'
