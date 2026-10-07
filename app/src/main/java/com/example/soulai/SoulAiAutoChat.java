@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
+import io.github.libxposed.api.HookLoadPackageParam;
+import io.github.libxposed.api.XposedHelpers;
+import io.github.libxposed.api.XposedModule;
+import io.github.libxposed.api.XSharedPreferences;
+import io.github.libxposed.api.annotations.XposedModuleEntry;
+import io.github.libxposed.api.callbacks.XC_MethodHook;
+import io.github.libxposed.api.utils.XposedLogger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,9 +39,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Soul App LSPosed / Xposed AI Auto-Chat Automation Hook Module
+ * Soul App LSPosed LibXposed AI Auto-Chat Automation Hook Module
  */
-public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+@XposedModuleEntry
+public class SoulAiAutoChat extends XposedModule {
 
     public static final String MODULE_PACKAGE = "com.example.soulai";
     public static final String TARGET_PACKAGE = "com.soulapp.cn";
@@ -55,19 +56,21 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
     private String lastHandledMessage = "";
     private boolean isProcessing = false;
 
+    // 替换原来的 initZygote (IXposedHookZygoteInit)
     @Override
-    public void initZygote(StartupParam startupParam) throws Throwable {
-        prefs = new XSharedPreferences(MODULE_PACKAGE, "ai_config");
+    public void onZygoteInit() {
+        prefs = getSharedPreferences("ai_config");
         prefs.makeWorldReadable();
     }
 
+    // 替换原来 handleLoadPackage (IXposedHookLoadPackage)
     @Override
-    public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+    public void onLoadPackage(HookLoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals(TARGET_PACKAGE)) {
             return;
         }
 
-        XposedBridge.log("[SoulAI Hook] Hooking into Soul App...");
+        XposedLogger.log("[SoulAI Hook] Hooking into Soul App...");
 
         // Monitor Activity Lifecycle to inspect Chat Views
         XposedHelpers.findAndHookMethod(
@@ -80,7 +83,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
                         String activityName = activity.getClass().getName();
 
                         if (activityName.contains("Chat") || activityName.contains("Message")) {
-                            XposedBridge.log("[SoulAI] Chat Activity active: " + activityName);
+                            XposedLogger.log("[SoulAI] Chat Activity active: " + activityName);
                             setupChatListener(activity);
                         }
                     }
@@ -98,7 +101,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
                     View rootView = activity.getWindow().getDecorView();
                     scanViewHierarchy(activity, rootView);
                 } catch (Exception e) {
-                    XposedBridge.log("[SoulAI] View scan exception: " + e.getMessage());
+                    XposedLogger.log("[SoulAI] View scan exception: " + e.getMessage());
                 }
 
                 mainHandler.postDelayed(this, 1500); // Check screen every 1.5s
@@ -122,7 +125,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
             lastHandledMessage = latestPeerMessage;
             isProcessing = true;
 
-            XposedBridge.log("[SoulAI] New incoming peer message: " + latestPeerMessage);
+            XposedLogger.log("[SoulAI] New incoming peer message: " + latestPeerMessage);
             executor.execute(() -> processAiReplySequence(activity, "default_session", latestPeerMessage));
         }
     }
@@ -185,7 +188,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
             }
 
         } catch (Exception e) {
-            XposedBridge.log("[SoulAI] Request Error: " + e.getMessage());
+            XposedLogger.log("[SoulAI] Request Error: " + e.getMessage());
         } finally {
             isProcessing = false;
         }
@@ -228,7 +231,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
                 }
             }
         } catch (Exception e) {
-            XposedBridge.log("[SoulAI] HTTP Error: " + e.getMessage());
+            XposedLogger.log("[SoulAI] HTTP Error: " + e.getMessage());
         } finally {
             if (conn != null) conn.disconnect();
         }
@@ -262,7 +265,7 @@ public class SoulAiAutoChat implements IXposedHookLoadPackage, IXposedHookZygote
             for (View v : clickableViews) {
                 if (v.isShown() && v.isEnabled()) {
                     v.performClick();
-                    XposedBridge.log("[SoulAI] Auto Clicked Send!");
+                    XposedLogger.log("[SoulAI] Auto Clicked Send!");
                     return;
                 }
             }
