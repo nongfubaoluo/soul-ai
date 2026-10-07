@@ -27,8 +27,8 @@ android {
 }
 
 dependencies {
-    // Xposed API dependency (compileOnly required so it isn't bundled into the APK)
-    compileOnly 'de.robv.android.xposed:api:82'
+    // libxposed API 102（compileOnly，不会打包进APK）
+    compileOnly 'io.github.libxposed:api:102.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
 }
