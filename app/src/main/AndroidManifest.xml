@@ -10,7 +10,7 @@
         android:label="Soul AI 自动聊"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <!-- LSPosed / Xposed Module Flags -->
+        <!-- LSPosed libxposed Module Flags -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
@@ -19,7 +19,7 @@
             android:value="Soul App AI 自动聊天助手 (支持自定义 API / DeepSeek / ChatGPT 等大模型)" />
         <meta-data
             android:name="xposedminversion"
-            android:value="82" />
+            android:value="102" />
 
         <activity
             android:name=".MainActivity"
