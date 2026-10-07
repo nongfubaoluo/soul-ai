@@ -13,11 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import io.github.libxposed.api.HookLoadPackageParam;
+import io.github.libxposed.api.MethodHookParam;
+import io.github.libxposed.api.XC_MethodHook;
 import io.github.libxposed.api.XposedHelpers;
 import io.github.libxposed.api.XposedModule;
 import io.github.libxposed.api.XSharedPreferences;
 import io.github.libxposed.api.annotations.XposedModuleEntry;
-import io.github.libxposed.api.callbacks.XC_MethodHook;
 import io.github.libxposed.api.utils.XposedLogger;
 
 import org.json.JSONArray;
