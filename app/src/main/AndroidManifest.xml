@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.soulai">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:allowBackup="true"
-        
-        android:label="Soul AI 自动聊"
+        android:label="SoulAI自动聊天"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <!-- LSPosed libxposed Module Flags -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="Soul App AI 自动聊天助手 (支持自定义 API / DeepSeek / ChatGPT 等大模型)" />
+            android:value="SoulAI自动聊天模块，自动回复Soul消息" />
         <meta-data
             android:name="xposedminversion"
             android:value="102" />
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>
