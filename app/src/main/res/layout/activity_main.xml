@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soul AI 自动聊配置控制台"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <Switch
+            android:id="@+id/switchAutoReply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开启 AI 自动回复功能"
+            android:checked="true"
+            android:layout_marginBottom="8dp"/>
+
+        <Switch
+            android:id="@+id/switchAutoSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自动点击【发送】按钮"
+            android:checked="true"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etApiUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="API 地址 (例如 OpenAI / DeepSeek)"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etApiKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="API Key (密钥)"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="模型名称 (例: deepseek-chat, gpt-3.5-turbo)"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etSystemPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="人设设定 (System Prompt)"
+            android:lines="3"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etDelay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="模拟打字发送延迟 (毫秒, 默认 2000ms)"
+            android:inputType="number"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etMaxHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="上下文保留轮数 (默认 10 条)"
+            android:inputType="number"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存配置"/>
+
+    </LinearLayout>
+</ScrollView>
