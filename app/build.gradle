@@ -27,8 +27,6 @@ android {
 }
 
 dependencies {
-    // libxposed API 102，正确版本号 102.0.0
     compileOnly 'io.github.libxposed:api:102.0.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
 }
