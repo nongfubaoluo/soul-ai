@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 网络权限，用于调用AI接口 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:label="SoulAI自动聊天"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
+        <!-- LibXposed模块标识 -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
